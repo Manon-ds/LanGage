@@ -1,12 +1,13 @@
 /* eslint-disable no-undef */
 const mongoose = require("mongoose");
+const LanGageMessage = require("../models/messageSchema");
 // const request = require("supertest");
 // const index = require("../index");
 // const { expect } = require('jest');
 
 const MONGODB_URI = "mongodb://localhost:27017/lanGageMessagesdb"
 
-const { postMessage } = require("../models/messageModel.js");
+const { postMessage, retrieveConversationList, addGPTReplyProp } = require("../models/messageModel.js");
 
 const mockMessage = {
   result: {
@@ -15,14 +16,6 @@ const mockMessage = {
     timestamp: Date.now(),
     conversationID: 1,
     reply: null,
-  },
-  result1: {
-    role: "Test Role",
-    content: "Test Content",
-    timestamp: Date.now(),
-    conversationID: 1,
-    reply: null,
-    name: 'Richard'
   },
   message : {
     role: "Test Role",
@@ -47,6 +40,7 @@ afterEach(async () => {
 
 
 
+
 // describe("postMessage", () => {
 //   it(" goodPath should return a new message with ID", async () => {
 //     const data = await postMessage(mockMessage.message);
@@ -54,3 +48,25 @@ afterEach(async () => {
 //   });
 // });
 // it("badPath should log an error", async () => {});
+
+test('should return conversation list', async() => {
+  const data = await retrieveConversationList("conversationID");
+  const result =  await LanGageMessage.distinct("conversationID");
+  expect(data).toEqual(result);
+})
+// test('asynchronous rejection', async () => {
+//   const result = await LanGageMessage.distinct(undefined);
+//   console.log(result);
+//   await expect(LanGageMessage.distinct(undefined)).toThrow();
+// });
+
+test('should ad reply prop', async() => {
+  addGPTReplyProp("reply", '65564b939e9e6980afc8aa43');
+ const res = await LanGageMessage.find({_id: '65564b939e9e6980afc8aa43'});
+ expect(res[0].reply).toEqual("reply");
+})
+// test('error thrown when there is no message passed', async () => {
+//   const consoleSpy = jest.spyOn(console, 'log');
+//   const test = await addGPTReplyProp('undefined');
+//   expect(consoleSpy).toHaveBeenCalledWith( expect.anything());
+// });
