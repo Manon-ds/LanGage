@@ -5,6 +5,8 @@ const openai = new OpenAI({
   apiKey: apiK,
 });
 
+// TODO error in input, remove comment below
+
 //TODO: Remove duplicate 'should' from prompt. Format to appear in a more readable format?
 //TODO: Add systemPrompt to a separate file and import it. Then we don't have to worry about making the prompt more readable without taking up too much space.
 const systemPrompt =
