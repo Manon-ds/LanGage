@@ -7,6 +7,9 @@ const {
 } = require("../models/messageModel");
 const { reduceAndSortConversationHistory } = require("../util.js");
 
+//TODO Make this one function wihtin the controllers, removing extra functionality from the model.
+
+//TODO: Possible refactor: change concateneated error logs to template literals. IF TIME!
 async function postNewMessage(req, res) {
   try {
     const newMessageWithID = await postMessage(req.body);
