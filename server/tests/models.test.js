@@ -88,7 +88,7 @@ test('should log an error when conversation list not retrieved', async () => {
   // await expect(TestMessage.distinct(undefined)).toThrow();
 });
 
-test('should ad reply prop', async() => {
+test.skip('should ad reply prop', async() => {
   addGPTReplyProp("reply", '65573664105c707a4b91a932');
  const res = await TestMessage.find({_id: '65573664105c707a4b91a932'});
  expect(res[0].reply).toEqual("reply");

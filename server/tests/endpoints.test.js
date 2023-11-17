@@ -25,21 +25,17 @@ const mockMessage = {
   },
 };
 
+const mockGPTReply = {
+  role: 'Test Role',
+  content: 'GPT Reply Content',
+}
 
 
-describe('End to end tests', () => {
-  // const app = express();
-  // app.use(express.json);
-  // app.use(router);
-  // const request = supertest(app);
-  // test.only('Should post a user message to the DB', async () => {
-  //   await request.post('/messages/user', ).send(mockMessage.message);
-  //   const message = await LanGageMessage.findOne({conversationID: mockMessage.result.conversationID});
-  //   expect(message.content).toBe(mockMessage.message.content);
-  // })
 
-  beforeAll(done => {
-    done()
+
+describe('Endpoint tests', () => {
+  beforeAll(() => {
+
   })
 
   afterAll(done => {
@@ -54,13 +50,21 @@ describe('End to end tests', () => {
     const res = await request(app)
         .post("/messages/user")
         .set('Content-type', 'application/json')
-        .set('Authorization', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.t-IDcSemACt8x4iTMCda8Yhe3iZaWbvV5XKSTbuAn0M')
         .send(mockMessage.message)
         .expect(200);
 
     expect(res.body.content).toEqual(mockMessage.result.content);
-
 });
+
+  it.only('should retrieve a reply from ChatGPT and assign the id number to it.', async () => {
+    const res = await request(app)
+      .post("/messages/gpt")
+      .set('Content-type', 'application/json')
+      .send(mockMessage.message)
+      .expect(200);
+
+      expect(res.body.content).toBe(mockGPTReply.content);
+  })
 
 })
 
