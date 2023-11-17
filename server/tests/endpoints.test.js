@@ -4,7 +4,7 @@
 const request = require('supertest');
 // const TestMessage = require('./testSchema');
 // const LanGageMessage = require('../models/messageSchema')
-const app = require('../index');
+const {app, server } = require('../index');
 
 const mongoose = require('mongoose');
 // const MONGODB_URI = "mongodb://localhost:27017/testMessagesdb";
@@ -45,7 +45,7 @@ describe('End to end tests', () => {
   afterAll(done => {
     // Closing the DB connection allows Jest to exit successfully.
     mongoose.connection.close()
-    app.close();
+    server.close();
 
     done()
   })
