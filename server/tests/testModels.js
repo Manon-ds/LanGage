@@ -38,11 +38,9 @@ async function retrieveConversationList(field) {
 }
 
 async function addGPTReplyProp(gptReply, id) {
-    console.log('called')
 
   try {
-    const result = await testMessage.updateOne({ _id: id }, { $set: { reply: gptReply } });
-    console.log('result' ,result)
+     await testMessage.updateOne({ _id: id }, { $set: { reply: gptReply } });
   } catch (e) {
     console.log("User message not posted:", e);
   }
