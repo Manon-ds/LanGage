@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
 const mongoose = require("mongoose");
-const TestMessage = require("./testSchema");
+const TestMessage = require("./testSchema.js");
 const { postMessage, retrieveConversation, retrieveConversationList, addGPTReplyProp } = require("./testModels.js");
 // const request = require("supertest");
 
