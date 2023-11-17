@@ -32,7 +32,6 @@ async function gptReplyTest(req, res) {
 
 
     const reply = mockGPTReply//TODO
-    console.log(reply);
     //const gptOutput = await GPT.main(userMessage, conversationHistory);
 
     // Isolate the response message.
@@ -40,6 +39,7 @@ async function gptReplyTest(req, res) {
 
     // Assign the reply a conversation ID. This was extracted from the request body on line 26.
     reply.conversationID = conversationID;
+    console.log(reply);
     // Post the reply from GPT to the database, it is then assigned an id from MongoDB.
     const replyWithID = await postMessage(reply);
     // Add the chatGPT reply to the database?

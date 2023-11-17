@@ -52,7 +52,7 @@ async function gptReply(req, res) {
     res.sendStatus(500).json({ error: "AI reply failed" });
   }
 }
-// Think of it as if you are sending the reply from ChatGPT?
+// Think of it as if you are sending the reply from ChatGPT.
 
 async function getConversation(req, res) {
   try {
