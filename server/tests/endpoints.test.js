@@ -37,39 +37,63 @@ describe("Endpoint tests", () => {
 
   it("should post user message", async () => {
     const res = await request(app)
-      .post("/messages/user")
-      .set("Content-type", "application/json")
-      .send(mockMessage.message)
-      .expect(200);
+        .post("/messages/user")
+        .set("Content-type", "application/json")
+        .send(mockMessage.message)
+        .expect(200);
 
     expect(res.body.content).toEqual(mockMessage.result.content);
-  });
+});
 
-  it("should retrieve a reply from ChatGPT and assign the id number to it.", async () => {
-    const res = await request(app)
-      .post("/messages/gpt")
-      .set("Content-type", "application/json")
-      .send(mockMessage.message)
+it("should get conversation", async () => {
+  const res = await request(app)
+      .get("/messages/1")
+      .set('Content-type', 'application/json')
       .expect(200);
-
-    expect(res.body.conversationID).toBe(mockMessage.message.conversationID);
+  expect(res.body[0].content).toEqual("content");
+});
+it("should get status 200", async () => {
+  await request(app)
+      .get("/messages/1")
+      .set('Content-type', 'application/json')
+      .expect(200)
+      .then((res) => {
+      expect(res.statusCode).toBe(200);
   });
-
-  // testing router.get("/messages/conversations", getConversationsList);
-  it("should retrieve a list of all conversations from the database", async () => {
-    const res = await request(app).get("/messages/conversations").expect(200);
-
-    expect(res.body.length).toBeGreaterThan(1);
+});
+it("should translate text", async () => {
+  const res = await request(app)
+      .post("/translate/word")
+      .set('Content-type', 'application/json')
+      .send({ "word": 'hola' })
+      .expect(200);
+  expect(res.body).toEqual('hello');
+});
+it("should translate text", async () => {
+  await request(app)
+      .post("/translate/word")
+      .set('Content-type', 'application/json')
+      .send({ "word": 'hola' })
+      .expect(200)
+      .then((res) => {
+      expect(res.statusCode).toBe(200);
   });
 });
 
-// beforeEach(async () => {
-//   await mongoose.connect(MONGODB_URI);
-// });
+it("should retrieve a reply from ChatGPT and assign the id number to it.", async () => {
+  const res = await request(app)
+    .post("/messages/gpt")
+    .set("Content-type", "application/json")
+    .send(mockMessage.message)
+    .expect(200);
 
-// afterEach(async () => {
-//   await mongoose.connection.close();
-//   jest.restoreAllMocks();
-// });
+  expect(res.body.conversationID).toBe(mockMessage.message.conversationID);
+});
 
-//router.post("/messages/user", postNewMessage);
+// testing router.get("/messages/conversations", getConversationsList);
+it("should retrieve a list of all conversations from the database", async () => {
+  const res = await request(app).get("/messages/conversations").expect(200);
+
+  expect(res.body.length).toBeGreaterThan(1);
+});
+});
