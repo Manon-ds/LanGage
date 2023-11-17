@@ -80,5 +80,42 @@ describe('End to end tests', () => {
           expect(res.statusCode).toBe(200);
       })
   });
+  });
+
+  it("should get conversation", async () => {
+    const res = await request(app)
+        .get("/messages/1")
+        .set('Content-type', 'application/json')
+        .expect(200)
+    expect(res.body[0].content).toEqual("content");
+  });
+  it("should get status 200", async () => {
+    await request(app)
+        .get("/messages/1")
+        .set('Content-type', 'application/json')
+        .expect(200)
+        .then((res) => {
+          expect(res.statusCode).toBe(200);
+      })
+  });
+
+  it("should translate text", async () => {
+    const res = await request(app)
+        .post("/translate/word")
+        .set('Content-type', 'application/json')
+        .send({"word": 'hola'})
+        .expect(200)
+    expect(res.body).toEqual('hello');
+  });
+  it("should translate text", async () => {
+    await request(app)
+        .post("/translate/word")
+        .set('Content-type', 'application/json')
+        .send({"word": 'hola'})
+        .expect(200)
+        .then((res) => {
+          expect(res.statusCode).toBe(200);
+      })
+  });
 
 })
