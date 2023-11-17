@@ -4,7 +4,7 @@ const {
   retrieveConversation,
   retrieveConversationList,
   addGPTReplyProp,
-} = require("../models/messageModel");
+} = require( "../models/messageModel");
 const { reduceAndSortConversationHistory } = require("../util.js");
 
 //TODO Make this one function wihtin the controllers, removing extra functionality from the model.

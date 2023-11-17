@@ -2,7 +2,14 @@
     "compilerOptions": {
       "outDir": "./built",
       "allowJs": true,
-      "target": "es2017"
+      // "target": "es2017",
+      "module": "commonjs",
+
+      "esModuleInterop": true,
+      "target": "es6",
+      "rootDir": "./",
+      "strict": true
     },
-    "include": ["./server/**/*"]
+    "include": ["./server/**/*"],
+
   }
