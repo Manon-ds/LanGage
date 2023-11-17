@@ -80,42 +80,23 @@ describe('End to end tests', () => {
           expect(res.statusCode).toBe(200);
       })
   });
-  });
 
-  it("should get conversation", async () => {
+
+
+  it("should retrieve a reply from ChatGPT and assign the id number to it.", async () => {
     const res = await request(app)
-        .get("/messages/1")
-        .set('Content-type', 'application/json')
-        .expect(200)
-    expect(res.body[0].content).toEqual("content");
-  });
-  it("should get status 200", async () => {
-    await request(app)
-        .get("/messages/1")
-        .set('Content-type', 'application/json')
-        .expect(200)
-        .then((res) => {
-          expect(res.statusCode).toBe(200);
-      })
+      .post("/messages/gpt")
+      .set("Content-type", "application/json")
+      .send(mockMessage.message)
+      .expect(200);
+
+    expect(res.body.conversationID).toBe(mockMessage.message.conversationID);
   });
 
-  it("should translate text", async () => {
-    const res = await request(app)
-        .post("/translate/word")
-        .set('Content-type', 'application/json')
-        .send({"word": 'hola'})
-        .expect(200)
-    expect(res.body).toEqual('hello');
-  });
-  it("should translate text", async () => {
-    await request(app)
-        .post("/translate/word")
-        .set('Content-type', 'application/json')
-        .send({"word": 'hola'})
-        .expect(200)
-        .then((res) => {
-          expect(res.statusCode).toBe(200);
-      })
-  });
+  // testing router.get("/messages/conversations", getConversationsList);
+  it("should retrieve a list of all conversations from the database", async () => {
+    const res = await request(app).get("/messages/conversations").expect(200);
 
+    expect(res.body.length).toBeGreaterThan(1);
+  });
 })
