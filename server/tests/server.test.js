@@ -73,36 +73,33 @@ describe("postMessage testing", () => {
 
 
 
-
-// describe("postMessage", () => {
-//   it(" goodPath should return a new message with ID", async () => {
-//     const data = await postMessage(mockMessage.message);
-//     expect(data).toEqual(mockMessage.result);
-//   });
-// });
-// it("badPath should log an error", async () => {});
-
 test('should return conversation list', async() => {
   const data = await retrieveConversationList("conversationID");
   const result =  await TestMessage.distinct("conversationID");
   expect(data).toEqual(result);
 })
-// test('asynchronous rejection', async () => {
-//   const result = await LanGageMessage.distinct(undefined);
-//   console.log(result);
-//   await expect(LanGageMessage.distinct(undefined)).toThrow();
-// });
+test('should log an error when conversation list not retrieved', async () => {
+  const consoleSpy = jest.spyOn(console, "log").mockImplementation(() => {});
+      await retrieveConversationList(undefined);
+      expect(consoleSpy).toHaveBeenCalled();
+      consoleSpy.mockRestore();
+  // const result = await TestMessage.distinct(undefined);
+  // console.log(result);
+  // await expect(TestMessage.distinct(undefined)).toThrow();
+});
 
 test('should ad reply prop', async() => {
   addGPTReplyProp("reply", '65573664105c707a4b91a932');
  const res = await TestMessage.find({_id: '65573664105c707a4b91a932'});
  expect(res[0].reply).toEqual("reply");
 })
-// test('error thrown when there is no message passed', async () => {
-//   const consoleSpy = jest.spyOn(console, 'log');
-//   const test = await addGPTReplyProp('undefined');
-//   expect(consoleSpy).toHaveBeenCalledWith( expect.anything());
+// test.only('error thrown when there is no message passed', async () => {
+//   const consoleSpy = jest.spyOn(console, 'log').mockImplementation(() => {});
+//    await addGPTReplyProp('undefined');
+//   expect(consoleSpy).toHaveBeenCalled();
+//   consoleSpy.mockRestore();
 // });
+
 afterEach(async () => {
   await mongoose.connection.close();
   jest.restoreAllMocks();

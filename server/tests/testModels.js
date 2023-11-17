@@ -24,20 +24,25 @@ async function retrieveConversation(conversationID) {
   }
 }
 
-async function retrieveConversationList() {
+async function retrieveConversationList(field) {
+    // "conversationID"
   try {
-    const conversationList = await testMessage.distinct("conversationID");
+    const conversationList = await testMessage.distinct(field);
+    if (conversationList.length === 0) {
+        throw new Error("Conversation list retrieval failed:")
+      }
     return conversationList;
   } catch (e) {
     console.log("Conversation list retrieval failed:", e);
-    throw new Error(e);
-
   }
 }
 
 async function addGPTReplyProp(gptReply, id) {
+    console.log('called')
+
   try {
-    await testMessage.updateOne({ _id: id }, { $set: { reply: gptReply } });
+    const result = await testMessage.updateOne({ _id: id }, { $set: { reply: gptReply } });
+    console.log('result' ,result)
   } catch (e) {
     console.log("User message not posted:", e);
   }
