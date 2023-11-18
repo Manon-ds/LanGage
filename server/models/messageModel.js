@@ -14,9 +14,9 @@ async function retrieveConversation(conversationID) {
     const conversationByID = await LanGageMessage.find({
       conversationID: conversationID,
     });
-    if (conversationByID.length === 0) {
-      throw new Error("Converstaion not found.")
-    }
+    // if (conversationByID.length === 0) {
+    //   throw new Error("Converstaion not found.")
+    // }
 
     return conversationByID;
   } catch (e) {

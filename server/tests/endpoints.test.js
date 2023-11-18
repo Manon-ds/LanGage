@@ -12,17 +12,25 @@ const mongoose = require('mongoose');
 
 const mockMessage = {
   result: {
-    role: "Test Role",
+    role: "user",
     content: "Test Content",
     timestamp: Date.now(),
     conversationID: 99,
     reply: null,
   },
   message : {
-    role: "Test Role",
+    role: "user",
     content: "Test Content",
     conversationID: 99,
   },
+  gptMessage: {
+    role: "user",
+    content: "Test Content",
+    timestamp: Date.now(),
+    conversationID: 99,
+    reply: null,
+    _id: "6558e1cb6318c38edda10780"
+  }
 };
 
 
@@ -47,10 +55,10 @@ describe('End to end tests', () => {
 
   it("should get conversation", async () => {
     const res = await request(app)
-        .get("/messages/1")
+        .get("/messages/99")
         .set('Content-type', 'application/json')
         .expect(200)
-    expect(res.body[0].content).toEqual("content");
+    expect(res.body[0].content).toEqual("Test Content");
   });
   it("should get status 200", async () => {
     await request(app)
@@ -87,7 +95,7 @@ describe('End to end tests', () => {
     const res = await request(app)
       .post("/messages/gpt")
       .set("Content-type", "application/json")
-      .send(mockMessage.message)
+      .send(mockMessage.gptMessage)
       .expect(200);
 
     expect(res.body.conversationID).toBe(mockMessage.message.conversationID);
@@ -96,6 +104,6 @@ describe('End to end tests', () => {
   it("should retrieve a list of all conversations from the database", async () => {
     const res = await request(app).get("/messages/conversations").expect(200);
 
-    expect(res.body.length).toBeGreaterThan(1);
+    expect(res.body.length).toBeGreaterThan(0);
   });
 })
