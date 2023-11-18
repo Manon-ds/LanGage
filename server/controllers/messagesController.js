@@ -29,11 +29,11 @@ async function gptReply(req, res) {
     const userMessage = { role, content };
     //console.log(userMessage);
     const dbConversationHistory = await retrieveConversation(conversationID);
-    console.log(dbConversationHistory);
+    // console.log(dbConversationHistory);
     const conversationHistory = reduceAndSortConversationHistory(
       dbConversationHistory
       );
-      console.log(conversationHistory);
+      // console.log(conversationHistory);
     const gptOutput = await GPT.main(userMessage, conversationHistory);
     const reply = gptOutput.message;
     reply.conversationID = conversationID;

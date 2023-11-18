@@ -9,14 +9,14 @@ const MONGODB_URI = "mongodb://localhost:27017/testMessagesdb"
 
 const mockMessage = {
   result: {
-    role: "Test Role",
+    role: "user",
     content: "Test Content",
     timestamp: Date.now(),
     conversationID: 1,
     reply: null,
   },
   message : {
-    role: "Test Role",
+    role: "user",
     content: "Test Content",
     conversationID: 1,
   },
