@@ -31,13 +31,16 @@ async function gptReply(req, res) {
 
     // Create a userMessage object with the role and content, extracted above.
     const userMessage = { role, content };
+    //console.log(userMessage);
     //Retrieve the conversation history from the database with the relevant converstaion ID.
     const dbConversationHistory = await retrieveConversation(conversationID);
+    console.log(dbConversationHistory);
     // Take the retrieved history and pass it through a helper function.
     // The helper function returns an array of message objects sorted from oldest to newest.
     const conversationHistory = reduceAndSortConversationHistory(
       dbConversationHistory
-    );
+      );
+      console.log(conversationHistory);
     // Make a call to the chatGPT API. Send the user message and the recent converstaion history for context.
     // Store the GPT response as a variable.
     const gptOutput = await GPT.main(userMessage, conversationHistory);
@@ -53,8 +56,8 @@ async function gptReply(req, res) {
     // Test here -
     res.status(200).json(replyWithID);
   } catch (e) {
-    console.log("AI call failed:", e);
-    res.sendStatus(500).json({ error: "AI reply failed" });
+    console.log("🤖AI call failed:", e);
+    res.status(500).json({ error: `AI reply failed: ${e}` });
   }
 }
 // Think of it as if you are sending the reply from ChatGPT.
@@ -66,7 +69,7 @@ async function getConversation(req, res) {
     res.status(200).json(conversationHistory);
   } catch (e) {
     console.log("Got an error:", e);
-    res.sendStatus(500).json({ error: "Could not retrieve conversation" });
+    res.status(500).json({ error: "Could not retrieve conversation" });
   }
 }
 
@@ -76,7 +79,7 @@ async function getConversationsList(req, res) {
     res.status(200).json(conversationList);
   } catch (e) {
     console.log("Got an error:", e);
-    res.sendStatus(500).json({ error: "Could not retrieve conversation list" });
+    res.status(500).json({ error: "Could not retrieve conversation list" });
   }
 }
 
