@@ -39,12 +39,6 @@ describe("postMessage testing", () => {
     const consoleSpy = jest.spyOn(console, "log").mockImplementation(() => {});
     await postMessage(undefined);
     expect(consoleSpy).toHaveBeenCalled();
-    // .toHaveBeenCalledTimes(
-    //   "User message not posted:",
-    //   expect.objectContaining({
-    //     message: expect.stringContaining("LanGageMessage validation failed"),
-    //   })
-    //   );
       consoleSpy.mockRestore();
     });
   });
@@ -83,9 +77,7 @@ test('should log an error when conversation list not retrieved', async () => {
       await retrieveConversationList(undefined);
       expect(consoleSpy).toHaveBeenCalled();
       consoleSpy.mockRestore();
-  // const result = await TestMessage.distinct(undefined);
-  // console.log(result);
-  // await expect(TestMessage.distinct(undefined)).toThrow();
+
 });
 
 test('should ad reply prop', async() => {

@@ -26,7 +26,6 @@ async function gptReplyTest(req, res) {
     const conversationHistory = reduceAndSortConversationHistory(
       dbConversationHistory
     );
-    console.log(userMessage, conversationHistory);
     // Make a call to the chatGPT API. Send the user message and the recent converstaion history for context.
     // Store the GPT response as a variable.
 

@@ -1,29 +1,34 @@
 const GPT = require("../gpt/gptAPI");
+// const {Response, Request } = require('express');
+
 const {
   postMessage,
   retrieveConversation,
   retrieveConversationList,
   addGPTReplyProp,
-} = require( "../models/messageModel");
+} = require("../models/messageModel");
 const { reduceAndSortConversationHistory } = require("../util.js");
 
 //TODO Make this one function wihtin the controllers, removing extra functionality from the model.
 
 //TODO: Possible refactor: change concateneated error logs to template literals. IF TIME!
-async function postNewMessage(req, res) {
+
+async function postNewMessage(req , res){
   try {
     const newMessageWithID = await postMessage(req.body);
     res.status(200).json(newMessageWithID);
   } catch (e) {
-    console.log("New message post failed:", e);
-    res.sendStatus(500).json({ error: "New message post failed" });
+    console.error("New message post failed:", e);
+    res.status(500).json({ error: "New message post failed" });
   }
 }
 
 async function gptReply(req, res) {
   try {
     // Extract the message role, content and IDs from the request body.
+
     const { role, content, conversationID, _id } = req.body;
+
     // Create a userMessage object with the role and content, extracted above.
     const userMessage = { role, content };
     //Retrieve the conversation history from the database with the relevant converstaion ID.
@@ -68,8 +73,6 @@ async function getConversation(req, res) {
 async function getConversationsList(req, res) {
   try {
     const conversationList = await retrieveConversationList();
-    // TODO remove comment here
-    console.log("conversationList: ", conversationList);
     res.status(200).json(conversationList);
   } catch (e) {
     console.log("Got an error:", e);

@@ -93,7 +93,6 @@ describe('End to end tests', () => {
     expect(res.body.conversationID).toBe(mockMessage.message.conversationID);
   });
 
-  // testing router.get("/messages/conversations", getConversationsList);
   it("should retrieve a list of all conversations from the database", async () => {
     const res = await request(app).get("/messages/conversations").expect(200);
 
