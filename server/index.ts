@@ -1,4 +1,4 @@
-import config from "./config";
+import { port } from "./config";
 import express from 'express'
 const app = express();
 const router = require("./router");
@@ -16,6 +16,6 @@ app.use(cors(corsOptions));
 app.use(express.json());
 app.use(router);
 
-const server = app.listen(config.port, () => console.log(`server is running on port ${config.port}`));
+const server = app.listen(port, () => console.log(`server is running on port ${port}`));
 
 module.exports = { app, server };

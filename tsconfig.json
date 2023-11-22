@@ -4,7 +4,7 @@
     "module": "CommonJS",
     "moduleResolution": "node",
     "allowJs": true /* Allow JavaScript files to be a part of your program. Use the 'checkJS' option to get errors from these files. */,
-    "outDir": "./Build" /* Specify an output folder for all emitted files. */,
+    "outDir": "./server/dist" /* Specify an output folder for all emitted files. */,
     "esModuleInterop": true /* Emit additional JavaScript to ease support for importing CommonJS modules. This enables 'allowSyntheticDefaultImports' for type compatibility. */,
 
     "forceConsistentCasingInFileNames": true /* Ensure that casing is correct in imports. */,
