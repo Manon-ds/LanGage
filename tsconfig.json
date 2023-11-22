@@ -106,8 +106,10 @@
     // "skipDefaultLibCheck": true,                      /* Skip type checking .d.ts files that are included with TypeScript. */
     "skipLibCheck": true                                 /* Skip type checking all .d.ts files. */
   },
+  // TODO: Remove d.ts if you don't end up using it.
   "include": [
     "server/**/*.ts",
     "server/**/*.d.ts"
-  ]
+  ],
+  "exclude": ["Build"]
 }
