@@ -16,7 +16,7 @@ import { reduceAndSortConversationHistory } from "../util";
 
 //TODO: Possible refactor: change concateneated error logs to template literals. IF TIME!
 
-interface Message extends Document {
+interface IMessage extends Document {
   _id: Types.ObjectId;
   role: string;
   content: string;
@@ -28,7 +28,7 @@ interface Message extends Document {
 
 export async function postNewMessage(req: Request, res: Response) {
   try {
-    const newMessageWithID: Message = await postMessage(req.body);
+    const newMessageWithID: IMessage = await postMessage(req.body);
     res.status(200).json(newMessageWithID);
   } catch (e) {
     console.error("New message post failed:", e);
@@ -52,8 +52,6 @@ export async function gptReply(req: Request, res: Response) {
     const conversationHistory = reduceAndSortConversationHistory(
       dbConversationHistory
     );
-    console.log(conversationHistory);
-
     const gptOutput = await GPT.main(userMessage, conversationHistory);
     const reply = gptOutput.message;
     reply.conversationID = conversationID;

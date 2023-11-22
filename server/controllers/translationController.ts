@@ -1,5 +1,5 @@
 // @ts-ignore
-import { translateToEnglish } from "../deepl/deeplAPI.js";
+import { translateToEnglish } from "../deepl/deeplAPI";
 import { Request, Response } from "express";
 
 export async function translateText(req: Request, res: Response) {
