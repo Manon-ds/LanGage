@@ -32,7 +32,6 @@ async function retrieveConversationList() {
   } catch (e) {
     console.log("Conversation list retrieval failed:", e);
     throw new Error(e);
-
   }
 }
 
