@@ -8,6 +8,7 @@ export async function postMessage(message: LangageMessageType) {
     return newMessageWithId;
   } catch (e) {
     console.log("User message not posted:", e);
+    throw new Error("User message not posted");
   }
 }
 

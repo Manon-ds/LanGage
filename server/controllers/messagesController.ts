@@ -1,6 +1,7 @@
 // @ts-ignore
 import GPT from "../gpt/gptAPI";
-import { Response, Request } from 'express';
+import { Response, Request } from "express";
+import { Document, Types } from "mongoose";
 
 import {
   postMessage,
@@ -8,23 +9,24 @@ import {
   retrieveConversationList,
   addGPTReplyProp,
 } from "../models/messageModel";
+
 import { reduceAndSortConversationHistory } from "../util";
 
 //TODO Make this one function wihtin the controllers, removing extra functionality from the model.
 
 //TODO: Possible refactor: change concateneated error logs to template literals. IF TIME!
 
-interface Message{
-  _id: string,
-  role: string,
-  content: string,
-  conversationID: number,
-  reply: null | string,
-  timestamp: number,
-  __v: number}
+interface Message extends Document {
+  _id: Types.ObjectId;
+  role: string;
+  content: string;
+  conversationID: number;
+  reply?: null | string;
+  timestamp: number;
+  __v?: number;
+}
 
-
-export async function postNewMessage(req: Request , res: Response){
+export async function postNewMessage(req: Request, res: Response) {
   try {
     const newMessageWithID: Message = await postMessage(req.body);
     res.status(200).json(newMessageWithID);
@@ -36,23 +38,28 @@ export async function postNewMessage(req: Request , res: Response){
 
 export async function gptReply(req: Request, res: Response) {
   try {
-    const { role, content, conversationID, _id }: {role: string, content: string, conversationID: number, _id: string} = req.body;
+    const {
+      role,
+      content,
+      conversationID,
+      _id,
+    }: { role: string; content: string; conversationID: number; _id: string } =
+      req.body;
     const userMessage = { role, content };
     //console.log(userMessage);
     const dbConversationHistory = await retrieveConversation(conversationID);
     // console.log(dbConversationHistory);
     const conversationHistory = reduceAndSortConversationHistory(
       dbConversationHistory
-      );
-      console.log(conversationHistory);
-
+    );
+    console.log(conversationHistory);
 
     const gptOutput = await GPT.main(userMessage, conversationHistory);
     const reply = gptOutput.message;
     reply.conversationID = conversationID;
-    const replyWithID = await _postMessage(reply);
+    const replyWithID = await postMessage(reply);
     await addGPTReplyProp(replyWithID.content, _id);
-    console.log(`Reply with ID: ${replyWithID}`)
+    console.log(`Reply with ID: ${replyWithID}`);
     res.status(200).json(replyWithID);
   } catch (e) {
     console.log("🤖AI call failed:", e);
