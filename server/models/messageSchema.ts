@@ -1,6 +1,6 @@
 import { Schema, model } from "mongoose";
 
-interface ILangageMessage {
+export type LangageMessageType = {
   role: string;
   content: string;
   timestamp: number;
@@ -8,7 +8,7 @@ interface ILangageMessage {
   reply?: string | null;
 }
 
-const lanGageMessageSchema = new Schema<ILangageMessage>({
+const lanGageMessageSchema = new Schema<LangageMessageType>({
   role: {
     type: String,
     required: true,
@@ -31,4 +31,4 @@ const lanGageMessageSchema = new Schema<ILangageMessage>({
   }
 });
 
-export const Message = model<ILangageMessage>("LanGageMessage", lanGageMessageSchema);
+export const Message = model<LangageMessageType>("LanGageMessage", lanGageMessageSchema);

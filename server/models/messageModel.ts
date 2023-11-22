@@ -1,6 +1,7 @@
-const LanGageMessage = require("./messageSchema");
+import { Message as LanGageMessage, LangageMessageType} from "./messageSchema";
+// import { getErrorMessage } from "../utils/catchError";
 
-async function postMessage(message) {
+export async function postMessage(message: LangageMessageType) {
   try {
     const newMessageWithId = await LanGageMessage.create(message);
     return newMessageWithId;
@@ -9,7 +10,7 @@ async function postMessage(message) {
   }
 }
 
-async function retrieveConversation(conversationID) {
+export async function retrieveConversation(conversationID: number) {
   try {
     const conversationByID = await LanGageMessage.find({
       conversationID: conversationID,
@@ -25,7 +26,7 @@ async function retrieveConversation(conversationID) {
   }
 }
 
-async function retrieveConversationList() {
+export async function retrieveConversationList() {
   try {
     const conversationList = await LanGageMessage.distinct("conversationID");
     return conversationList;
@@ -35,17 +36,10 @@ async function retrieveConversationList() {
   }
 }
 
-async function addGPTReplyProp(gptReply, id) {
+export async function addGPTReplyProp(gptReply, id: string) {
   try {
     await LanGageMessage.updateOne({ _id: id }, { $set: { reply: gptReply } });
   } catch (e) {
     console.log("User message not posted:", e);
   }
 }
-
-module.exports = {
-  postMessage,
-  retrieveConversation,
-  retrieveConversationList,
-  addGPTReplyProp,
-};
