@@ -4,13 +4,12 @@
   "description": "Solo Project",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon ../Build/index.js",
+    "start": "ts-node index.ts",
     "test": "jest"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "module",
   "dependencies": {
     "@types/lodash": "^4.14.201",
     "cors": "^2.8.5",
@@ -18,7 +17,7 @@
     "express": "^4.18.2",
     "mongoose": "^8.0.1",
     "nodemon": "^3.0.1",
-    "openai": "^4.16.1"
+    "openai": "^4.19.1"
   },
   "devDependencies": {
     "@babel/preset-typescript": "^7.23.3",

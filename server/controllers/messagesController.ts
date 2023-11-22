@@ -2,13 +2,13 @@
 import GPT from "../gpt/gptAPI";
 import { Response, Request } from 'express';
 
-const {
-  _postMessage,
+import {
+  postMessage,
   retrieveConversation,
   retrieveConversationList,
   addGPTReplyProp,
-} = require("../models/messageModel");
-const { reduceAndSortConversationHistory } = require("../util.js");
+} from "../models/messageModel";
+import { reduceAndSortConversationHistory } from "../util";
 
 //TODO Make this one function wihtin the controllers, removing extra functionality from the model.
 
@@ -26,7 +26,7 @@ interface Message{
 
 async function postNewMessage(req: Request , res: Response){
   try {
-    const newMessageWithID: Message = await _postMessage(req.body);
+    const newMessageWithID: Message = await postMessage(req.body);
     res.status(200).json(newMessageWithID);
   } catch (e) {
     console.error("New message post failed:", e);

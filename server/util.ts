@@ -8,7 +8,7 @@ interface Message{
   __v: number}
 
 
-function reduceAndSortConversationHistory(dbConversationHistory: Message[]) {
+export function reduceAndSortConversationHistory(dbConversationHistory: Message[]) {
   const sortedShortenedHistory = dbConversationHistory
   // Take the conversation history array, sort it from oldest to newest.
     .sort((a, b) => a.timestamp - b.timestamp)
@@ -22,4 +22,3 @@ function reduceAndSortConversationHistory(dbConversationHistory: Message[]) {
   return transformedHistory;
 }
 
-module.exports = { reduceAndSortConversationHistory };
