@@ -14,7 +14,7 @@ import { reduceAndSortConversationHistory } from "../util";
 
 //TODO: Possible refactor: change concateneated error logs to template literals. IF TIME!
 
-interface Message{
+type Message ={
   _id: string,
   role: string,
   content: string,
@@ -50,7 +50,7 @@ async function gptReply(req: Request, res: Response) {
     const gptOutput = await GPT.main(userMessage, conversationHistory);
     const reply = gptOutput.message;
     reply.conversationID = conversationID;
-    const replyWithID = await _postMessage(reply);
+    const replyWithID = await postMessage(reply);
     await addGPTReplyProp(replyWithID.content, _id);
     console.log(`Reply with ID: ${replyWithID}`)
     res.status(200).json(replyWithID);

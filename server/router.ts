@@ -1,4 +1,8 @@
-const router = require("express").Router();
+import express from 'express'
+const router = express.Router();
+
+
+
 const {
   gptReply,
   getConversation,
@@ -13,4 +17,4 @@ router.get("/messages/conversations", getConversationsList);
 router.get("/messages/:id", getConversation);
 router.post("/translate/word", translateText);
 
-module.exports = router;
+export default router;
