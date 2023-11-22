@@ -1,4 +1,14 @@
-function reduceAndSortConversationHistory(dbConversationHistory) {
+interface Message{
+  _id: string,
+  role: string,
+  content: string,
+  conversationID: number,
+  reply: null | string,
+  timestamp: number,
+  __v: number}
+
+
+function reduceAndSortConversationHistory(dbConversationHistory: Message[]) {
   const sortedShortenedHistory = dbConversationHistory
   // Take the conversation history array, sort it from oldest to newest.
     .sort((a, b) => a.timestamp - b.timestamp)

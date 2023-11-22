@@ -27,4 +27,4 @@ async function main(userMessage, prevMessages) {
   return chatCompletion.choices[0];
 }
 
-module.exports = { main };
+export { main };

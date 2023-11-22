@@ -1,6 +1,8 @@
-const { translateToEnglish } = require("../deepl/deeplAPI.js");
+// @ts-ignore
+import { translateToEnglish } from "../deepl/deeplAPI.js";
+import { Request, Response } from "express";
 
-async function translateText(req, res) {
+async function translateText(req: Request, res: Response) {
   try {
     const word = req.body.word;
     const translation = await translateToEnglish(word);
