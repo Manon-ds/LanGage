@@ -1,8 +1,8 @@
 import { port } from "./config";
 import express from 'express'
 const app = express();
-const router = require("./router");
-const cors = require("cors");
+import router from "./router";
+import cors from 'cors';
 
 const corsOptions = {
   origin: "http://localhost:3000",
@@ -18,4 +18,4 @@ app.use(router);
 
 const server = app.listen(port, () => console.log(`server is running on port ${port}`));
 
-module.exports = { app, server };
+export { app, server };

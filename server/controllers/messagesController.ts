@@ -24,7 +24,7 @@ interface Message{
   __v: number}
 
 
-async function postNewMessage(req: Request , res: Response){
+export async function postNewMessage(req: Request , res: Response){
   try {
     const newMessageWithID: Message = await postMessage(req.body);
     res.status(200).json(newMessageWithID);
@@ -34,7 +34,7 @@ async function postNewMessage(req: Request , res: Response){
   }
 }
 
-async function gptReply(req: Request, res: Response) {
+export async function gptReply(req: Request, res: Response) {
   try {
     const { role, content, conversationID, _id }: {role: string, content: string, conversationID: number, _id: string} = req.body;
     const userMessage = { role, content };
@@ -61,7 +61,7 @@ async function gptReply(req: Request, res: Response) {
 }
 // Think of it as if you are sending the reply from ChatGPT.
 
-async function getConversation(req: Request, res: Response) {
+export async function getConversation(req: Request, res: Response) {
   try {
     const conversationID = req.params.id;
     const conversationHistory = await retrieveConversation(conversationID);
@@ -72,7 +72,7 @@ async function getConversation(req: Request, res: Response) {
   }
 }
 
-async function getConversationsList(req: Request, res: Response) {
+export async function getConversationsList(req: Request, res: Response) {
   try {
     const conversationList = await retrieveConversationList();
     res.status(200).json(conversationList);
@@ -81,10 +81,3 @@ async function getConversationsList(req: Request, res: Response) {
     res.status(500).json({ error: "Could not retrieve conversation list" });
   }
 }
-
-module.exports = {
-  gptReply,
-  getConversation,
-  postNewMessage,
-  getConversationsList,
-};
