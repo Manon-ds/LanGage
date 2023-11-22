@@ -1,5 +1,4 @@
-// const { port } = require("./config.ts");
-import config from "./config.ts";
+import config from "./config";
 const express = require("express");
 const app = express();
 const router = require("./router.js");
