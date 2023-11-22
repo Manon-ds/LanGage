@@ -1,4 +1,5 @@
-const { port } = require("./config.ts");
+// const { port } = require("./config.ts");
+import config from "./config.ts";
 const express = require("express");
 const app = express();
 const router = require("./router.js");
@@ -16,6 +17,6 @@ app.use(cors(corsOptions));
 app.use(express.json());
 app.use(router);
 
-const server = app.listen(port, console.log(`server is running on port ${port}`));
+const server = app.listen(config.port, console.log(`server is running on port ${config.port}`));
 
 module.exports = { app, server };
