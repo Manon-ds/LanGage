@@ -14,8 +14,3 @@ router.get("/messages/:id", getConversation);
 router.post("/translate/word", translateText);
 
 module.exports = router;
-
-
-//Test route for gpt messages
-// const { gptReplyTest } = require("./tests/testControllers");
-  // router.post("/messages/gpt", gptReplyTest);

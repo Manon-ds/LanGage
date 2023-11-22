@@ -1,8 +1,9 @@
-const GPT = require("../gpt/gptAPI");
-// const {Response, Request } = require('express');
+// @ts-ignore
+import GPT from "../gpt/gptAPI";
+import { Response, Request } from 'express';
 
 const {
-  postMessage,
+  _postMessage,
   retrieveConversation,
   retrieveConversationList,
   addGPTReplyProp,
@@ -13,9 +14,19 @@ const { reduceAndSortConversationHistory } = require("../util.js");
 
 //TODO: Possible refactor: change concateneated error logs to template literals. IF TIME!
 
-async function postNewMessage(req , res){
+interface Message{
+  _id: string,
+  role: string,
+  content: string,
+  conversationID: number,
+  reply: null | string,
+  timestamp: number,
+  __v: number}
+
+
+async function postNewMessage(req: Request , res: Response){
   try {
-    const newMessageWithID = await postMessage(req.body);
+    const newMessageWithID: Message = await _postMessage(req.body);
     res.status(200).json(newMessageWithID);
   } catch (e) {
     console.error("New message post failed:", e);
@@ -23,9 +34,9 @@ async function postNewMessage(req , res){
   }
 }
 
-async function gptReply(req, res) {
+async function gptReply(req: Request, res: Response) {
   try {
-    const { role, content, conversationID, _id } = req.body;
+    const { role, content, conversationID, _id }: {role: string, content: string, conversationID: number, _id: string} = req.body;
     const userMessage = { role, content };
     //console.log(userMessage);
     const dbConversationHistory = await retrieveConversation(conversationID);
@@ -33,11 +44,13 @@ async function gptReply(req, res) {
     const conversationHistory = reduceAndSortConversationHistory(
       dbConversationHistory
       );
-      // console.log(conversationHistory);
+      console.log(conversationHistory);
+
+
     const gptOutput = await GPT.main(userMessage, conversationHistory);
     const reply = gptOutput.message;
     reply.conversationID = conversationID;
-    const replyWithID = await postMessage(reply);
+    const replyWithID = await _postMessage(reply);
     await addGPTReplyProp(replyWithID.content, _id);
     res.status(200).json(replyWithID);
   } catch (e) {
@@ -47,7 +60,7 @@ async function gptReply(req, res) {
 }
 // Think of it as if you are sending the reply from ChatGPT.
 
-async function getConversation(req, res) {
+async function getConversation(req: Request, res: Response) {
   try {
     const conversationID = req.params.id;
     const conversationHistory = await retrieveConversation(conversationID);
@@ -58,7 +71,7 @@ async function getConversation(req, res) {
   }
 }
 
-async function getConversationsList(req, res) {
+async function getConversationsList(req: Request, res: Response) {
   try {
     const conversationList = await retrieveConversationList();
     res.status(200).json(conversationList);
