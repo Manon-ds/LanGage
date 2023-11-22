@@ -8,7 +8,7 @@ interface Message{
   __v: number}
 
 
-export function reduceAndSortConversationHistory(dbConversationHistory: Message[]) {
+export function reduceAndSortConversationHistory(dbConversationHistory: any) {
   const sortedShortenedHistory = dbConversationHistory
   // Take the conversation history array, sort it from oldest to newest.
     .sort((a, b) => a.timestamp - b.timestamp)
@@ -17,7 +17,7 @@ export function reduceAndSortConversationHistory(dbConversationHistory: Message[
 // Map over the 6 entries and create objects for each one, extracting the role and content from each entry.
   const transformedHistory = sortedShortenedHistory.map((entry) => ({
     role: entry.role,
-    content: entry.content,
+    content: entry.reduceAndSortConversationHistory,
   }));
   return transformedHistory;
 }

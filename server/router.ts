@@ -1,15 +1,9 @@
 import express from 'express'
 const router = express.Router();
 
+import { gptReply, postNewMessage, getConversation, getConversationsList } from './controllers/messagesController';
 
-
-const {
-  gptReply,
-  getConversation,
-  postNewMessage,
-  getConversationsList,
-} = require("./controllers/messagesController");
-const { translateText } = require("./controllers/translationController");
+import { translateText } from './controllers/translationController';
 
 router.post("/messages/gpt", gptReply);
 router.post("/messages/user", postNewMessage);

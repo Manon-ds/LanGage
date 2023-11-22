@@ -1,8 +1,7 @@
-import { Message as LanGageMessage, LangageMessageType} from "./messageSchema";
-import { gptReplyType } from "./modelTypes";
-// import { getErrorMessage } from "../utils/catchError";
+import { Message as LanGageMessage} from "./messageSchema";
 
-export async function postMessage(message: LangageMessageType) {
+
+export async function postMessage(message: any) {
   try {
     const newMessageWithId = await LanGageMessage.create(message);
     return newMessageWithId;
@@ -11,14 +10,14 @@ export async function postMessage(message: LangageMessageType) {
   }
 }
 
-export async function retrieveConversation(conversationID: number) {
+export async function retrieveConversation(conversationID: any) {
   try {
     const conversationByID = await LanGageMessage.find({
       conversationID: conversationID,
     });
-    // if (conversationByID.length === 0) {
-    //   throw new Error("Converstaion not found.")
-    // }
+    if (conversationByID.length === 0) {
+      throw new Error("Converstaion not found.")
+    }
 
     return conversationByID;
   } catch (e) {
@@ -33,14 +32,16 @@ export async function retrieveConversationList() {
     return conversationList;
   } catch (e) {
     console.log("Conversation list retrieval failed:", e);
-    throw e;
+    throw new Error(e);
+
   }
 }
 
-export async function addGPTReplyProp(gptReply: gptReplyType, id: string) {
+export async function addGPTReplyProp(gptReply: any, id: any) {
   try {
     await LanGageMessage.updateOne({ _id: id }, { $set: { reply: gptReply } });
   } catch (e) {
     console.log("User message not posted:", e);
   }
 }
+

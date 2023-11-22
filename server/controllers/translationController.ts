@@ -1,8 +1,8 @@
 // @ts-ignore
-import { translateToEnglish } from "../deepl/deeplAPI.js";
+import { translateToEnglish } from "../deepl/deeplAPI";
 import { Request, Response } from "express";
 
-async function translateText(req: Request, res: Response) {
+export async function translateText(req: Request, res: Response) {
   try {
     const word = req.body.word;
     const translation = await translateToEnglish(word);
@@ -12,5 +12,3 @@ async function translateText(req: Request, res: Response) {
     res.sendStatus(500).json({ error: "Text translation failed" });
   }
 }
-
-module.exports = { translateText };
