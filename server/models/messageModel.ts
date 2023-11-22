@@ -1,4 +1,5 @@
 import { Message as LanGageMessage, LangageMessageType} from "./messageSchema";
+import { gptReplyType } from "./modelTypes";
 // import { getErrorMessage } from "../utils/catchError";
 
 export async function postMessage(message: LangageMessageType) {
@@ -32,11 +33,11 @@ export async function retrieveConversationList() {
     return conversationList;
   } catch (e) {
     console.log("Conversation list retrieval failed:", e);
-    throw new Error(e);
+    throw e;
   }
 }
 
-export async function addGPTReplyProp(gptReply, id: string) {
+export async function addGPTReplyProp(gptReply: gptReplyType, id: string) {
   try {
     await LanGageMessage.updateOne({ _id: id }, { $set: { reply: gptReply } });
   } catch (e) {

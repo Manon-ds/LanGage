@@ -23,6 +23,7 @@ async function main(userMessage, prevMessages) {
     model: 'gpt-3.5-turbo',
     temperature: 0,
   });
+  console.log(chatCompletion.choices[0])
   return chatCompletion.choices[0];
 }
 

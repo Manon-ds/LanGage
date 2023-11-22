@@ -39,6 +39,7 @@ async function gptReply(req, res) {
     reply.conversationID = conversationID;
     const replyWithID = await postMessage(reply);
     await addGPTReplyProp(replyWithID.content, _id);
+    console.log(`Reply with ID: ${replyWithID}`)
     res.status(200).json(replyWithID);
   } catch (e) {
     console.log("🤖AI call failed:", e);
