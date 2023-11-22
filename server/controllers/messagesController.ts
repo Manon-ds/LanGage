@@ -28,7 +28,7 @@ interface IMessage extends Document {
 
 export async function postNewMessage(req: Request, res: Response) {
   try {
-    const newMessageWithID: IMessage = await postMessage(req.body);
+    const newMessageWithID: any = await postMessage(req.body);
     res.status(200).json(newMessageWithID);
   } catch (e) {
     console.error("New message post failed:", e);
@@ -55,7 +55,7 @@ export async function gptReply(req: Request, res: Response) {
     const gptOutput = await GPT.main(userMessage, conversationHistory);
     const reply = gptOutput.message;
     reply.conversationID = conversationID;
-    const replyWithID = await postMessage(reply);
+    const replyWithID: any = await postMessage(reply);
     await addGPTReplyProp(replyWithID.content, _id);
     console.log(`Reply with ID: ${replyWithID}`);
     res.status(200).json(replyWithID);

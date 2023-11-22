@@ -30,7 +30,7 @@ export async function retrieveConversationList() {
   try {
     const conversationList = await LanGageMessage.distinct("conversationID");
     return conversationList;
-  } catch (e) {
+  } catch (e:any) {
     console.log("Conversation list retrieval failed:", e);
     throw new Error(e);
 
@@ -44,4 +44,3 @@ export async function addGPTReplyProp(gptReply: any, id: any) {
     console.log("User message not posted:", e);
   }
 }
-

@@ -1,0 +1,11 @@
+"use strict";
+import Router from "express";
+const router = Router.Router;
+import { gptReply, getConversation, postNewMessage, getConversationsList, } from "./controllers/messagesController.js";
+import { translateText } from"./controllers/translationController.js";
+router.post("/messages/gpt", gptReply);
+router.post("/messages/user", postNewMessage);
+router.get("/messages/conversations", getConversationsList);
+router.get("/messages/:id", getConversation);
+router.post("/translate/word", translateText);
+export default router;
