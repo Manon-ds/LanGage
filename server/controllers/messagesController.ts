@@ -12,12 +12,9 @@ import {
 
 import { reduceAndSortConversationHistory } from "../util";
 
-//TODO Make this one function wihtin the controllers, removing extra functionality from the model.
-
-//TODO: Possible refactor: change concateneated error logs to template literals. IF TIME!
 
 interface IMessage extends Document {
-  _id: Types.ObjectId;
+  _id: string;
   role: string;
   content: string;
   conversationID: number;
@@ -28,7 +25,7 @@ interface IMessage extends Document {
 
 export async function postNewMessage(req: Request, res: Response) {
   try {
-    const newMessageWithID: any = await postMessage(req.body);
+    const newMessageWithID: IMessage = await postMessage(req.body);
     res.status(200).json(newMessageWithID);
   } catch (e) {
     console.error("New message post failed:", e);

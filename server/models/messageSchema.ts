@@ -5,10 +5,10 @@ export type LangageMessageType = {
   content: string;
   timestamp: number;
   conversationID: number;
-  reply?: string | null;
+  reply: string | null;
 }
 
-const lanGageMessageSchema = new Schema<LangageMessageType>({
+export const lanGageMessageSchema = new Schema<LangageMessageType>({
   role: {
     type: String,
     required: true,
@@ -26,7 +26,7 @@ const lanGageMessageSchema = new Schema<LangageMessageType>({
      required: true
     },
   reply: {
-    type: String,
+    type: String ,
     default: null
   }
 });

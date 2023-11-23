@@ -1,16 +1,22 @@
 import { Message as LanGageMessage} from "./messageSchema";
+import { gptReplyType } from "./modelTypes";
 
+interface Message{
+  role: string,
+  content: string,
+  conversationID: number,
+}
 
-export async function postMessage(message: any) {
+export async function postMessage(message: Message) {
   try {
-    const newMessageWithId = await LanGageMessage.create(message);
+    const newMessageWithId: gptReplyType = await LanGageMessage.create(message);
     return newMessageWithId;
   } catch (e) {
     console.log("User message not posted:", e);
   }
 }
 
-export async function retrieveConversation(conversationID: any) {
+export async function retrieveConversation(conversationID: number) {
   try {
     const conversationByID = await LanGageMessage.find({
       conversationID: conversationID,
