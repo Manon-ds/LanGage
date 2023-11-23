@@ -1,7 +1,8 @@
 // @ts-ignore
 import GPT from "../gpt/gptAPI";
 import { Response, Request } from "express";
-import { Document, Types } from "mongoose";
+import { Document, Types, ObjectId } from "mongoose";
+import { gptReplyType } from "../models/modelTypes";
 
 import {
   postMessage,
@@ -13,19 +14,9 @@ import {
 import { reduceAndSortConversationHistory } from "../util";
 
 
-interface IMessage extends Document {
-  _id: string;
-  role: string;
-  content: string;
-  conversationID: number;
-  reply?: null | string;
-  timestamp: number;
-  __v?: number;
-}
-
 export async function postNewMessage(req: Request, res: Response) {
   try {
-    const newMessageWithID: IMessage = await postMessage(req.body);
+    const newMessageWithID: gptReplyType | undefined = await postMessage(req.body);
     res.status(200).json(newMessageWithID);
   } catch (e) {
     console.error("New message post failed:", e);

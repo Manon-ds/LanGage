@@ -16,7 +16,7 @@ export async function postMessage(message: Message) {
   }
 }
 
-export async function retrieveConversation(conversationID: number) {
+export async function retrieveConversation(conversationID: any) {
   try {
     const conversationByID = await LanGageMessage.find({
       conversationID: conversationID,
