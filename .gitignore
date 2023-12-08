@@ -67,6 +67,7 @@ web_modules/
 
 # lanGage custom
 *config.js
+*config.ts
 
 build
 dist
